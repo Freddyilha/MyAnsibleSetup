@@ -1,0 +1,12 @@
+---
+all:
+  vars:
+    distribution:
+      Ubuntu:
+        pacotes: ["python3", 'tmux', 'alacritty', "vim"]
+        package_manager: "apt"
+
+maquinas:
+  vars:
+    hostname: "apresentação.com"
+    contexto: "local"

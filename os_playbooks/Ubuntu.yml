@@ -1,0 +1,14 @@
+---
+- name: Add ppa for alacritty
+  apt_repository:
+    repo: 'ppa:mmstick76/alacritty'
+- name: Add ppa for vim 8.2
+  apt_repository:
+    repo: 'ppa:jonathonf/vim'
+- name: Apt update
+  apt:
+    update_cache: yes
+# - name: Install packages
+#   raw: "echo {{pacotes}}"
+#   vars:
+#     pacotes: "{{ distribution[ansible_distribution].pacotes }}"
