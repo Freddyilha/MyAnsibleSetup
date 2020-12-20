@@ -181,15 +181,6 @@ nmap <Leader>z :MaximizerToggle<cr>
 nmap <Leader>dd veyodd(pA;
 
 "-------------Laravel---------------"
-nmap <Leader>la :e routes/api.php<cr>
-
-nmap <Leader>ltf :! docker exec fm-site-br /var/www/vendor/bin/phpunit tests/Feature/Stories/StoriesTest.php<cr>
-nmap <Leader>ltu :! docker exec fm-site-br /var/www/vendor/bin/phpunit tests/Unit/StoryServiceUnitTest.php<cr>
-"nmap <Leader>lT :! vendor/bin/phpunit --filter 
-nmap <Leader>lT :! docker exec fm-site-br /var/www/vendor/bin/phpunit --filter 
-
-" nmap <Leader>lta :! docker exec app /var/www/vendor/bin/pest<cr>
-nmap <Leader>lta :! docker exec fm-site-br /var/www/vendor/bin/phpunit<cr>
 
 "-------------Auto-Commands--------------"
 
