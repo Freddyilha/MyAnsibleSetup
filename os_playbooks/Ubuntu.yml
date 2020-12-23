@@ -2,12 +2,17 @@
 - name: Add ppa for alacritty
   apt_repository:
     repo: 'ppa:mmstick76/alacritty'
+    state: present
+  become: yes
 - name: Add ppa for vim 8.2
   apt_repository:
     repo: 'ppa:jonathonf/vim'
+    state: present
+  become: yes
 - name: Apt update
   apt:
     update_cache: yes
+  become: yes
 # - name: Install packages
 #   raw: "echo {{packages}}"
 #   vars:

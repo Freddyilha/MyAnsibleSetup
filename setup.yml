@@ -22,6 +22,7 @@
         state: present
         use: "{{ distribution[ansible_distribution].package_manager }}"
       with_items: "{{ distribution[ansible_distribution].packages }}"
+      become: yes
     - name: Install dependecies for Qtile
       pip:
         name:
@@ -29,9 +30,10 @@
           - cairocffi
           - PyGObject
         extra_args: --no-cache-dir
+        executable: pip3
     - name: Clone Qtile
       git:
         repo: https://github.com/qtile/qtile
-        dest: ~/Downloads/
+        dest: ~/Downloads/qtile
     - name: Install Qtile
       command: pip3 install ~/Downloads/qtile/.
