@@ -10,9 +10,9 @@
     # - debug:
     #     msg: "{{ ansible_distribution_version }}"
     # - name: "Verify python installation"
-    #   raw: "echo {{pacotes}}"
+    #   raw: "echo {{packages}}"
     #   vars:
-    #     pacotes: "{{ distribution[ansible_distribution].pacotes }}"
+    #     packages: "{{ distribution[ansible_distribution].packages }}"
     - name: Include specific os tasks
       include_tasks:
         file: "os_playbooks/{{ ansible_distribution }}.yml"
@@ -21,4 +21,17 @@
         name: "{{ item }}"
         state: present
         use: "{{ distribution[ansible_distribution].package_manager }}"
-      with_items: "{{ distribution[ansible_distribution].pacotes }}"
+      with_items: "{{ distribution[ansible_distribution].packages }}"
+    - name: Install dependecies for Qtile
+      pip:
+        name:
+          - xcffib
+          - cairocffi
+          - PyGObject
+        extra_args: --no-cache-dir
+    - name: Clone Qtile
+      git:
+        repo: https://github.com/qtile/qtile
+        dest: ~/Downloads/
+    - name: Install Qtile
+      command: pip3 install ~/Downloads/qtile/.
