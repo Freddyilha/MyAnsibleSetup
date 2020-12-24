@@ -1,18 +1,12 @@
 ---
 - name: "Freddy Setup"
   hosts: maquinas
-  # hosts: localhost
-  # hosts: 127.0.0.1
   # gather_facts: no
   tasks:
     # - debug:
     #     msg: "{{ ansible_distribution }}"
     # - debug:
     #     msg: "{{ ansible_distribution_version }}"
-    # - name: "Verify python installation"
-    #   raw: "echo {{packages}}"
-    #   vars:
-    #     packages: "{{ distribution[ansible_distribution].packages }}"
     - name: Include specific os tasks
       include_tasks:
         file: "os_playbooks/{{ ansible_distribution }}.yml"
