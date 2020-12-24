@@ -3,10 +3,10 @@ all:
   vars:
     distribution:
       Ubuntu:
-        packages: ["libgirepository1.0-dev", "gcc", "libcairo2-dev", "pkg-config", "python3-dev", "gir1.2-gtk-3.0", "tmux", "alacritty", "vim", "python3-pip"]
+        packages: ["libgirepository1.0-dev", "gcc", "libcairo2-dev", "pkg-config", "python3-dev", "gir1.2-gtk-3.0", "tmux", "alacritty", "vim", "python3-pip", "spotify-client", "zsh"]
         package_manager: "apt"
       Arch:
-        packages: ["python3", 'tmux', 'alacritty', "vim"]
+        packages: ["python3", "tmux", "alacritty", "vim"]
         package_manager: "pacman"
 
 maquinas:

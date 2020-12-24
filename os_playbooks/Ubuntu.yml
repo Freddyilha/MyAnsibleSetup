@@ -9,6 +9,9 @@
     repo: 'ppa:jonathonf/vim'
     state: present
   become: yes
+- name: Configuration for spotify
+  raw: curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | apt-key add - echo "deb http://repository.spotify.com stable non-free" | tee /etc/apt/sources.list.d/spotify.list
+  become: yes
 - name: Apt update
   apt:
     update_cache: yes
