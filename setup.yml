@@ -31,3 +31,10 @@
         dest: ~/Downloads/qtile
     - name: Install Qtile
       command: pip3 install ~/Downloads/qtile/.
+    - name: Template qtile session
+      template:
+        src: /templates/qtile.desktop
+        dest: /usr/share/xsessions/qtile.desktop
+        owner: teste
+        group: wheel
+        mode: '0775'
