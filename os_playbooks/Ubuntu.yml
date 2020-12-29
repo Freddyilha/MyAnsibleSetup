@@ -16,6 +16,10 @@
   apt:
     update_cache: yes
   become: yes
+- name: Install JetBrainsMono font
+  shell: 
+    cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
+        
 # - name: Install packages
 #   raw: "echo {{packages}}"
 #   vars:
