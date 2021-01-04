@@ -28,13 +28,14 @@
     - name: Clone Qtile
       git:
         repo: https://github.com/qtile/qtile
-        dest: ~/Downloads/qtile
+        dest: /home/USERNAME/Downloads/qtile
+        clone: yes
+        force: yes
     - name: Install Qtile
-      command: pip3 install ~/Downloads/qtile/.
+      command: pip3 install /home/USERNAME/Downloads/qtile/.
     - name: Template qtile session
       template:
-        src: /templates/qtile.desktop
+        src: ./templates/qtile.desktop
         dest: /usr/share/xsessions/qtile.desktop
-        owner: teste
-        group: wheel
         mode: '0775'
+      become: yes
