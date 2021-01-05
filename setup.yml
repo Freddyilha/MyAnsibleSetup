@@ -17,10 +17,14 @@
         use: "{{ distribution[ansible_distribution].package_manager }}"
       with_items: "{{ distribution[ansible_distribution].packages }}"
       become: yes
-    - name: Install dependecies for Qtile
+    - name: Install xcffib before cairocffi for Qtile dependency
       pip:
         name:
           - xcffib
+        executable: pip3
+    - name: Install dependecies for Qtile
+      pip:
+        name:
           - cairocffi
           - PyGObject
         extra_args: --no-cache-dir
@@ -38,4 +42,10 @@
         src: ./templates/qtile.desktop
         dest: /usr/share/xsessions/qtile.desktop
         mode: '0775'
+      become: yes
+    - name: Template config files
+      template:
+        src: ./templates/.bashrc
+        dest: /home/
+        mode: '0770'
       become: yes

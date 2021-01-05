@@ -231,10 +231,6 @@ endfor
 " Kill the capslock when leaving insert mode.
 autocmd InsertLeave * set iminsert=0
 
-
-execute pathogen#infect()
-
-
 "Notes And Tips
 "
 " CTRL + ]

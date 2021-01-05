@@ -1,4 +1,8 @@
 ---
+- name: Install CURL
+  apt:
+    name: curl
+    state: present
 - name: Add ppa for alacritty
   apt_repository:
     repo: 'ppa:mmstick76/alacritty'
@@ -19,7 +23,11 @@
 - name: Install JetBrainsMono font
   shell: 
     cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
-        
+- name: Remove screenshot button function
+  shell: 
+    cmd: gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot '[]'
+# https://askubuntu.com/questions/1036473/ubuntu-18-how-to-change-screenshot-application-to-flameshot
+      
 # - name: Install packages
 #   raw: "echo {{packages}}"
 #   vars:
