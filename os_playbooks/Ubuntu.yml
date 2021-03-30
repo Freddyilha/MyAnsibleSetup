@@ -23,9 +23,15 @@
 - name: Install JetBrainsMono font
   shell: 
     cmd: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
+- name: Make caps behave like escape
+  shell:
+    cmd: setxkbmap -option caps:escape
 - name: Remove screenshot button function
   shell: 
     cmd: gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot '[]'
+- name: Set external monitor on the left
+  shell:
+    cmd: xrandr --output HDMI-1 --left-of eDP-1
 # https://askubuntu.com/questions/1036473/ubuntu-18-how-to-change-screenshot-application-to-flameshot
       
 # - name: Install packages
