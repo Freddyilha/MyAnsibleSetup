@@ -6,10 +6,10 @@ all:
         packages: ["libncursesw5-dev", "libgirepository1.0-dev", "gcc", "libcairo2-dev", "pkg-config", "python3-dev", "gir1.2-gtk-3.0", "tmux", "alacritty", "vim", "python3-pip", "zsh", "spotify-client", "fonts-powerline", "silversearcher-ag", "fzf"]
         package_manager: "apt"
       Arch:
-        packages: ["python3", "tmux", "alacritty", "vim"]
+        packages: ["git", "xorg", "xorg-init", "qtile", "python3", "tmux", "alacritty", "vim", "base-devel", "zsh", "fonts-powerline", "fzf",  ]
         package_manager: "pacman"
 
 maquinas:
   vars:
-    hostname: "apresentação.com"
+    hostname: "My configs"
     contexto: "local"
