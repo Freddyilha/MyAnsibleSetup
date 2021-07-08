@@ -8,7 +8,6 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'itchyny/lightline.vim'
@@ -27,6 +26,14 @@ Plug 'tomtom/tlib_vim'
 Plug 'garbas/vim-snipmate'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'wesQ3/vim-windowswap'
+Plug 'szw/vim-tags'
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'yegappan/greplace'
+Plug 'mattn/emmet-vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jpalardy/vim-slime'
+Plug 'hanschen/vim-ipython-cell'
 
 call plug#end()
 
@@ -45,6 +52,7 @@ set rtp+=~/.fzf                          "Seting the path for fzf
 set nu rnu
 set ignorecase
 set smartcase
+set sessionoptions-=options
 
 "--------------- Indentation------------------"
 filetype plugin indent on
@@ -109,6 +117,11 @@ let g:lightline = {
     \ }
 
 
+let g:snipMate = { 'snippet_version' : 1 }
+
+let g:slime_default_config = {"socket_name": "default", "target_pane": ":.2"}
+
+
 "Fuzzy Finder
 " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 let g:fzf_layout = { 'up': '~40%' }
@@ -118,7 +131,7 @@ let g:fzf_preview_window = 'right:40%'
 let NERDTreeHijackNetrw = 0
 
 "Greplace
-set grepprg=ag
+set grepprg=rg
 let g:grep_cmd_opts = '--line-numbers --noheading'
 
 "Windowswap
@@ -163,6 +176,8 @@ nnoremap <silent> <C-J> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-K> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-L> :TmuxNavigateRight<cr>
 
+let g:slime_target = "tmux"
+
 "-------------Mappings--------------"
 
 "Open FZF
@@ -181,17 +196,18 @@ nmap <Leader>b :Vifm<cr>
 nmap <Leader>! :!<cr>
 
 "Tag serch
-nmap <Leader>f :tag<space>
+nmap <Leader>f :BT<cr>
 
 "Ack search
-nmap <Leader>F :Ag <C-R>=expand('<cword>')<cr><cr>
+nmap <Leader>r :Rg<cr>
+nmap <Leader>R :Rg <C-R>=expand('<cword>')<cr><cr>
 
 "Git maps
-nmap <Leader>gg :G<cr>
-nmap <Leader>gc :Gcommit<cr>
-nmap <Leader>gh :Gpush<cr>
-nmap <Leader>gl :Gpull<cr>
-nmap <Leader>gf :Gfetch<cr>
+nmap <Leader>gg :Git<cr>
+nmap <Leader>gc :Git commit<cr>
+nmap <Leader>gh :Git push<cr>
+nmap <Leader>gl :Git pull<cr>
+nmap <Leader>gb :Git Branches<cr>
 
 "Vim-maximizer
 let g:maximizer_set_default_mapping = 0
@@ -200,10 +216,14 @@ nmap <Leader>z :MaximizerToggle<cr>
 
 "Macros
 "put the var under the cursor into a die and dump func
-nmap <Leader>dd veyodd(pA;
+" nmap <Leader>dd veyodd(pA;
+nmap <Leader>dd F$wyiwodd($pA);€ýa
 
-"-------------Laravel---------------"
 
+"-------------Testing---------------"
+nmap <Leader>ta :!docker exec -it quiz-application ./vendor/bin/phpunit<cr>
+nmap <Leader>T :!docker exec -it quiz-application ./vendor/bin/phpunit --filter
+" docker exec -it quiz-application ./vendor/bin/simple-phpunit tests/AdminGameBundle/Controller/SelfAssessmentCampaignGameControllerTest.php
 "-------------Auto-Commands--------------"
 
 :command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> -
@@ -230,6 +250,7 @@ endfor
 
 " Kill the capslock when leaving insert mode.
 autocmd InsertLeave * set iminsert=0
+
 
 "Notes And Tips
 "
@@ -277,6 +298,15 @@ autocmd InsertLeave * set iminsert=0
 " za: Toggle showing hidden files
 " zo: Show hidden files
 " zm: Hide hidden files
+"
+" Macro to update symfony services
+" nyt:lopA: '@'€ýahjWWdg_k_vt:p_yt:lhph
+"
+" :let @" = expand("%")  copy to unamed register then just use p to paste
+"
+" With the code on the left and the legacy_services on the right this macro
+" will replace the 'this->get' call with dependency injection
+" let @q = '"/$this->get('"f'yi'l/"g_byiwh?"public function"f)i, p/"$this->get('"_yt ?"public function"f)i p/"$this->get"('d1k€ýa'
 
 
 set term=xterm-256color
