@@ -6,7 +6,7 @@ all:
         packages: ["libncursesw5-dev", "libgirepository1.0-dev", "gcc", "libcairo2-dev", "pkg-config", "python3-dev", "gir1.2-gtk-3.0", "tmux", "alacritty", "vim", "python3-pip", "zsh", "spotify-client", "fonts-powerline", "silversearcher-ag", "fzf"]
         package_manager: "apt"
       Arch:
-        packages: ["git", "xorg", "xorg-init", "qtile", "python3", "tmux", "alacritty", "vim", "base-devel", "zsh", "fonts-powerline", "fzf",  ]
+        packages: ["xorg", "xorg-init", "xorg-server", "xorg-devel", "qtile", "python3", "tmux", "alacritty", "vim", "base-devel", "zsh", "fonts-powerline", "fzf", "nvidia", "nvidia-utils", "nvidia-settings", "dmenu", "nodejs"]
         package_manager: "pacman"
 
 maquinas:

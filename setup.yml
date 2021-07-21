@@ -17,26 +17,6 @@
         use: "{{ distribution[ansible_distribution].package_manager }}"
       with_items: "{{ distribution[ansible_distribution].packages }}"
       become: yes
-    - name: Install xcffib before cairocffi for Qtile dependency
-      pip:
-        name:
-          - xcffib
-        executable: pip3
-    - name: Install dependecies for Qtile
-      pip:
-        name:
-          - cairocffi
-          - PyGObject
-        extra_args: --no-cache-dir
-        executable: pip3
-    - name: Clone Qtile
-      git:
-        repo: https://github.com/qtile/qtile
-        dest: /home/USERNAME/Downloads/qtile
-        clone: yes
-        force: yes
-    - name: Install Qtile
-      command: pip3 install /home/USERNAME/Downloads/qtile/.
     - name: Template qtile session
       template:
         src: ./templates/qtile.desktop
