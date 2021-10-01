@@ -33,6 +33,7 @@ Plug 'yegappan/greplace'
 Plug 'mattn/emmet-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jpalardy/vim-slime'
+Plug 'jacoborus/tender.vim'
 
 call plug#end()
 
@@ -44,7 +45,7 @@ set number														"Let's activate line numbers.
 set complete=.,w,b,u                  "Set ou desired autocompletion matching.
 set shortmess+=c
 set mouse=a
-set ttymouse=sgr
+" set ttymouse=sgr
 set ma
 set autoread
 set rtp+=~/.fzf                          "Seting the path for fzf
@@ -71,7 +72,12 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set t_CO=256													"Use 256 colors. This is useful for Terminal Vim.
 set laststatus=2
 set noshowmode
-colorscheme nightfly
+if (has("termguicolors"))
+    set termguicolors
+endif
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" colorscheme nightfly
+colorscheme tender
 "Change the color of the divsor for vertical split
 hi vertsplit ctermfg=black ctermbg=black
 hi ColorColumn ctermbg=0 guibg=#a5a7b8
@@ -104,7 +110,7 @@ function! LightlineFugitive()
 endfunction
 
 let g:lightline = {
-    \ 'colorscheme': 'seoul256',
+    \ 'colorscheme': 'tender',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
     \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
@@ -115,10 +121,21 @@ let g:lightline = {
     \ },
     \ }
 
+let g:fzf_branch_actions = {
+      \ 'diff': {
+      \   'prompt': 'Diff> ',
+      \   'execute': 'Git diff {branch}',
+      \   'multiple': v:false,
+      \   'keymap': 'ctrl-f',
+      \   'required': ['branch'],
+      \   'confirm': v:false,
+      \ },
+      \}
 
 let g:snipMate = { 'snippet_version' : 1 }
 
 let g:slime_target = "x11"
+let g:slime_python_ipython = 1
 
 "Fuzzy Finder
 " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
@@ -174,9 +191,8 @@ nnoremap <silent> <C-J> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-K> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-L> :TmuxNavigateRight<cr>
 
-let g:slime_target = "tmux"
-
 "-------------Mappings--------------"
+nnoremap Q <Nop>
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
@@ -209,7 +225,7 @@ nmap <Leader>gg :Git<cr>
 nmap <Leader>gc :Git commit<cr>
 nmap <Leader>gh :Git push<cr>
 nmap <Leader>gl :Git pull<cr>
-nmap <Leader>gb :Git Branches<cr>
+nmap <Leader>gb :GBranches<cr>
 
 "Vim-maximizer
 let g:maximizer_set_default_mapping = 0
@@ -308,6 +324,10 @@ autocmd InsertLeave * set iminsert=0
 " With the code on the left and the legacy_services on the right this macro
 " will replace the 'this->get' call with dependency injection
 " let @q = '"/$this->get('"f'yi'l/"g_byiwh?"public function"f)i, p/"$this->get('"_yt ?"public function"f)i p/"$this->get"('d1k€ýa'
+"
+" mysql://{user}:{password}@{ipAddress}:{port}/{database}
 
 
-set term=xterm-256color
+if !has('nvim')
+    set term=xterm-256color
+endif
