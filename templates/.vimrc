@@ -33,6 +33,7 @@ Plug 'yegappan/greplace'
 Plug 'mattn/emmet-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jpalardy/vim-slime'
+Plug 'jacoborus/tender.vim'
 
 call plug#end()
 
@@ -63,7 +64,9 @@ set shiftwidth=4
 set splitright
 set wrap! linebreak nolist
 
-set termguicolors
+if (has("termguicolors"))
+    set termguicolors
+endif
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
@@ -71,13 +74,18 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set t_CO=256													"Use 256 colors. This is useful for Terminal Vim.
 set laststatus=2
 set noshowmode
-colorscheme nightfly
+" colorscheme nightfly
+colorscheme tender
 "Change the color of the divsor for vertical split
 hi vertsplit ctermfg=black ctermbg=black
 hi ColorColumn ctermbg=0 guibg=#a5a7b8
 "-------------Plugins--------------"
 "LightLine
 " let g:lightline = {  }
+"
+" set lighline theme inside lightline config
+let g:lightline = { 'colorscheme': 'tender' }
+
 function! LightlineFilename()
   let root = fnamemodify(get(b:, 'git_dir'), ':h')
   let path = expand('%:p')
@@ -103,22 +111,23 @@ function! LightlineFugitive()
     return ''
 endfunction
 
-let g:lightline = {
-    \ 'colorscheme': 'seoul256',
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-    \ },
-    \ 'component_function': {
-    \   'filename': 'LightlineFilename',
-    \   'fugitive': 'LightlineFugitive',
-    \ },
-    \ }
+" let g:lightline = {
+"     \ 'colorscheme': 'seoul256',
+"     \ 'active': {
+"     \   'left': [ [ 'mode', 'paste' ],
+"     \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+"     \ },
+"     \ 'component_function': {
+"     \   'filename': 'LightlineFilename',
+"     \   'fugitive': 'LightlineFugitive',
+"     \ },
+"     \ }
 
 
 let g:snipMate = { 'snippet_version' : 1 }
 
 let g:slime_target = "x11"
+let g:slime_python_ipython = 1
 
 "Fuzzy Finder
 " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
@@ -174,8 +183,6 @@ nnoremap <silent> <C-J> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-K> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-L> :TmuxNavigateRight<cr>
 
-let g:slime_target = "tmux"
-
 "-------------Mappings--------------"
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
@@ -209,7 +216,7 @@ nmap <Leader>gg :Git<cr>
 nmap <Leader>gc :Git commit<cr>
 nmap <Leader>gh :Git push<cr>
 nmap <Leader>gl :Git pull<cr>
-nmap <Leader>gb :Git Branches<cr>
+nmap <Leader>gb :GBranches<cr>
 
 "Vim-maximizer
 let g:maximizer_set_default_mapping = 0
@@ -308,6 +315,8 @@ autocmd InsertLeave * set iminsert=0
 " With the code on the left and the legacy_services on the right this macro
 " will replace the 'this->get' call with dependency injection
 " let @q = '"/$this->get('"f'yi'l/"g_byiwh?"public function"f)i, p/"$this->get('"_yt ?"public function"f)i p/"$this->get"('d1k€ýa'
+"
+" mysql://{user}:{password}@{ipAddress}:{port}/{database}
 
 
 set term=xterm-256color

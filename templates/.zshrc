@@ -72,7 +72,7 @@ WORDCHARS=${WORDCHARS//[\/]}
 
 # Customize the style that the suggestions are shown with.
 # See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
-#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 
 #
 # zsh-syntax-highlighting
@@ -82,14 +82,10 @@ WORDCHARS=${WORDCHARS//[\/]}
 # See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
-# Disable the cursor style feature
-ZVM_CURSOR_STYLE_ENABLED=false
-
-
 # Customize the main highlighter styles.
 # See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md#how-to-tweak-it
 #typeset -A ZSH_HIGHLIGHT_STYLES
-#ZSH_HIGHLIGHT_STYLES[comment]='fg=10'
+#ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
 
 # ------------------
 # Initialize modules
@@ -143,7 +139,7 @@ export TERM="xterm-256color"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -240,12 +236,10 @@ alias dps="docker ps"
 alias g="git status"
 alias gc="git checkout"
 alias gm="git merge"
-alias database="docker exec -it quiz-database mysql -u quiz_app -pquiz_app -D quiz_app"
 alias now="date +%s"
-alias quizapp="~/./quizapp.sh"
-alias fexlab="~/./fexlab.sh"
-alias minerals="~/./minerals.sh"
 alias zhc="~/./zhc.sh"
+alias fexlab="~/./fexlab.sh"
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -262,3 +256,10 @@ FORMAT="\nID\t{{.ID}}\nIMAGE\t{{.Image}}\nCOMMAND\t{{.Command}}\nCREATED\t{{.Run
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="$PATH:$HOME/.gem"
+export PATH="$PATH:$HOME/.local/bin/jupyter-qtconsole"
+
+source /usr/share/nvm/init-nvm.sh
+source ~/.rvm/scripts/rvm
+source /usr/share/fzf/key-bindings.zsh

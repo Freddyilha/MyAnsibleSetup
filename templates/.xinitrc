@@ -8,7 +8,7 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 # merge in defaults and keymaps
 xrandr --setprovideroutputsource modesetting NVIDIA-0
 xrandr --auto
-xrandr --output HDMI-1-1 --left-of eDP-1-1 --mode 1920x1080
+xrandr --output HDMI-1-1 --above eDP-1-1 --mode 2560x1080
 
 if [ -f $sysresources ]; then
 
@@ -53,6 +53,8 @@ fi
 
 setxkbmap br
 setxkbmap -option caps:escape
+xinput set-prop "DELL0959:00 06CB:CDD5 Touchpad" "libinput Tapping Enabled" 1
+xinput set-prop "DELL0959:00 06CB:CDD5 Touchpad" 348 1
 
 picom &
 exec qtile
