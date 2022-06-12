@@ -33,7 +33,13 @@ Plug 'yegappan/greplace'
 Plug 'mattn/emmet-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jpalardy/vim-slime'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+"Themes
 Plug 'jacoborus/tender.vim'
+Plug 'morhetz/gruvbox'
+Plug 'doums/darcula'
+Plug 'dracula/vim', { 'as': 'dracula' }
+
 
 call plug#end()
 
@@ -45,7 +51,6 @@ set number														"Let's activate line numbers.
 set complete=.,w,b,u                  "Set ou desired autocompletion matching.
 set shortmess+=c
 set mouse=a
-set ttymouse=sgr
 set ma
 set autoread
 set rtp+=~/.fzf                          "Seting the path for fzf
@@ -53,6 +58,7 @@ set nu rnu
 set ignorecase
 set smartcase
 set sessionoptions-=options
+set guicursor=n-v-c:block-Cursor
 
 "--------------- Indentation------------------"
 filetype plugin indent on
@@ -75,16 +81,17 @@ set t_CO=256													"Use 256 colors. This is useful for Terminal Vim.
 set laststatus=2
 set noshowmode
 " colorscheme nightfly
-colorscheme tender
+" colorscheme tender
+colorscheme darcula
 "Change the color of the divsor for vertical split
 hi vertsplit ctermfg=black ctermbg=black
-hi ColorColumn ctermbg=0 guibg=#a5a7b8
+hi ColorColumn ctermbg=0 guibg=#d0d1da
 "-------------Plugins--------------"
 "LightLine
 " let g:lightline = {  }
 "
 " set lighline theme inside lightline config
-let g:lightline = { 'colorscheme': 'tender' }
+let g:lightline = { 'colorscheme': 'darculaOriginal' }
 
 function! LightlineFilename()
   let root = fnamemodify(get(b:, 'git_dir'), ':h')
@@ -166,6 +173,7 @@ let g:vdebug_options.path_maps = {"/home/user/scripts": "/home/jon/php"}
 "-------------Search--------------"
 set hlsearch												"Highlight all matched terms.
 set incsearch												"Incrementally highlight, as we type.
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 "-------------Split Management--------------"
 set splitbelow 											"Make splits default to below...
@@ -232,6 +240,27 @@ nmap <Leader>dd F$wyiwodd($pA);€ýa
 nmap <Leader>ta :!docker exec -it quiz-application ./vendor/bin/phpunit<cr>
 nmap <Leader>T :!docker exec -it quiz-application ./vendor/bin/phpunit --filter
 " docker exec -it quiz-application ./vendor/bin/simple-phpunit tests/AdminGameBundle/Controller/SelfAssessmentCampaignGameControllerTest.php
+
+
+
+"------------Terminal colors------------"
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
+
 "-------------Auto-Commands--------------"
 
 :command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> -
@@ -319,4 +348,4 @@ autocmd InsertLeave * set iminsert=0
 " mysql://{user}:{password}@{ipAddress}:{port}/{database}
 
 
-set term=xterm-256color
+" set term=xterm-256color
