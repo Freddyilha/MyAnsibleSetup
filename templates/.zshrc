@@ -12,7 +12,10 @@
 #
 
 # Remove older command from the history if a duplicate is to be added.
+setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_ALL_DUPS
+setopt INC_APPEND_HISTORY
+
 
 #
 # Input/output
@@ -239,6 +242,14 @@ alias gm="git merge"
 alias now="date +%s"
 alias zhc="~/./zhc.sh"
 alias fexlab="~/./fexlab.sh"
+
+# My Aliases
+alias metro="~/metro.sh"
+alias env36="source ~/Documents/delivery-api.git/test/.venv/bin/activate"
+alias env37="source ~/Documents/delivery-api.git/test/venv3.7/bin/activate"
+alias poppy="~/poppy.sh"
+alias ..='cd ..'
+
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
