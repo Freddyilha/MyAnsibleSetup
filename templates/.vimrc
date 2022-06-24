@@ -39,6 +39,7 @@ Plug 'jacoborus/tender.vim'
 Plug 'morhetz/gruvbox'
 Plug 'doums/darcula'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
 
 
 call plug#end()
@@ -83,6 +84,7 @@ set noshowmode
 " colorscheme nightfly
 " colorscheme tender
 colorscheme darcula
+" colorscheme onehalflight
 "Change the color of the divsor for vertical split
 hi vertsplit ctermfg=black ctermbg=black
 hi ColorColumn ctermbg=0 guibg=#d0d1da
@@ -92,6 +94,11 @@ hi ColorColumn ctermbg=0 guibg=#d0d1da
 "
 " set lighline theme inside lightline config
 let g:lightline = { 'colorscheme': 'darculaOriginal' }
+" let g:lightline = { 'colorscheme': 'onehalfdark' }
+
+if !has('gui_running')
+  set t_Co=256
+endif
 
 function! LightlineFilename()
   let root = fnamemodify(get(b:, 'git_dir'), ':h')
@@ -102,21 +109,32 @@ function! LightlineFilename()
   return expand('%')
 endfunction
 
-function! LightlineFugitive()
-    if &ft !~? 'vimfiler' && exists('*fugitive#head')
-        let branch = fugitive#head()
+let g:lightline = {
+      \ 'colorscheme': 'darculaOriginal',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
 
-       " if len(branch) > 10
-        return branch
-       " endif
+" function! LightlineFugitive()
+"     if &ft !~? 'vimfiler' && exists('*fugitive#head')
+"         let branch = fugitive#head()
 
-       " let splittedBranchName = split(fugitive#head(), '-')
+"        " if len(branch) > 10
+"         return branch
+"        " endif
 
-      "  return join([split(fugitive#head(), '-')[0], split(fugitive#head(), '-')[1]], '-')
+"        " let splittedBranchName = split(fugitive#head(), '-')
 
-    endif
-    return ''
-endfunction
+"       "  return join([split(fugitive#head(), '-')[0], split(fugitive#head(), '-')[1]], '-')
+
+"     endif
+"     return ''
+" endfunction
 
 " let g:lightline = {
 "     \ 'colorscheme': 'seoul256',
@@ -139,7 +157,7 @@ let g:slime_python_ipython = 1
 "Fuzzy Finder
 " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 let g:fzf_layout = { 'up': '~40%' }
-let g:fzf_preview_window = 'right:40%'
+let g:fzf_preview_window = 'right:60%'
 
 "NerdTree Configs
 let NERDTreeHijackNetrw = 0
@@ -192,8 +210,9 @@ nnoremap <silent> <C-K> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-L> :TmuxNavigateRight<cr>
 
 "-------------Mappings--------------"
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
+nnoremap Q <Nop>
+" vnoremap J :m '>+1<CR>gv=gv
+" vnoremap K :m '<-2<CR>gv=gv
 
 nnoremap J mzJ'z
 
@@ -201,7 +220,7 @@ nnoremap J mzJ'z
 nmap <silent> <C-p> :Files<cr>
 
 "Make it easy to edit the Vimrc file.
-nmap <Leader>ev :tabedit $MYVIMRC<cr>
+nmap <Leader>ev :tabedit ~/.vimrc<cr>
 
 "Add simple highlight removal.
 nmap <Leader><space> :nohlsearch<cr>
