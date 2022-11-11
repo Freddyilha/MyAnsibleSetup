@@ -10,6 +10,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'sheerun/vim-polyglot'
 Plug 'itchyny/lightline.vim'
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'vifm/vifm.vim'
@@ -34,6 +35,7 @@ Plug 'mattn/emmet-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jpalardy/vim-slime'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 "Themes
 Plug 'jacoborus/tender.vim'
 Plug 'morhetz/gruvbox'
@@ -41,6 +43,17 @@ Plug 'doums/darcula'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 
+"Debugging
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'theHamsta/nvim-dap-virtual-text'
+
+"Python
+Plug 'mfussenegger/nvim-dap-python'
+
+"Laravel
+Plug 'yaegassy/coc-blade', {'do': 'yarn install --frozen-lockfile'}
+Plug 'jwalton512/vim-blade'
 
 call plug#end()
 
@@ -53,6 +66,7 @@ set complete=.,w,b,u                  "Set ou desired autocompletion matching.
 set shortmess+=c
 set mouse=a
 set ma
+set cursorline
 set autoread
 set rtp+=~/.fzf                          "Seting the path for fzf
 set nu rnu
@@ -93,21 +107,16 @@ hi ColorColumn ctermbg=0 guibg=#d0d1da
 " let g:lightline = {  }
 "
 " set lighline theme inside lightline config
-let g:lightline = { 'colorscheme': 'darculaOriginal' }
+" let g:lightline = { 'colorscheme': 'darculaOriginal' }
 " let g:lightline = { 'colorscheme': 'onehalfdark' }
 
 if !has('gui_running')
   set t_Co=256
 endif
 
-function! LightlineFilename()
-  let root = fnamemodify(get(b:, 'git_dir'), ':h')
-  let path = expand('%:p')
-  if path[:len(root)-1] ==# root
-    return path[len(root)+1:]
-  endif
-  return expand('%')
-endfunction
+" function! LightlineFilename()
+"   return expand('%:p:h:t')
+" endfunction
 
 let g:lightline = {
       \ 'colorscheme': 'darculaOriginal',
@@ -116,38 +125,19 @@ let g:lightline = {
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
+      \   'gitbranch': 'FugitiveHead',
+      \   'filename': 'LightlineFilename'
       \ },
       \ }
 
-" function! LightlineFugitive()
-"     if &ft !~? 'vimfiler' && exists('*fugitive#head')
-"         let branch = fugitive#head()
 
-"        " if len(branch) > 10
-"         return branch
-"        " endif
+function! LightlineFilename()
+  return expand('%') !=# '' ? expand('%') : '[No Name]'
+endfunction
 
-"        " let splittedBranchName = split(fugitive#head(), '-')
-
-"       "  return join([split(fugitive#head(), '-')[0], split(fugitive#head(), '-')[1]], '-')
-
-"     endif
-"     return ''
-" endfunction
-
-" let g:lightline = {
-"     \ 'colorscheme': 'seoul256',
-"     \ 'active': {
-"     \   'left': [ [ 'mode', 'paste' ],
-"     \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-"     \ },
-"     \ 'component_function': {
-"     \   'filename': 'LightlineFilename',
-"     \   'fugitive': 'LightlineFugitive',
-"     \ },
-"     \ }
-
+let g:unite_force_overwrite_statusline = 0
+let g:vimfiler_force_overwrite_statusline = 0
+let g:vimshell_force_overwrite_statusline = 0
 
 let g:snipMate = { 'snippet_version' : 1 }
 
@@ -156,7 +146,8 @@ let g:slime_python_ipython = 1
 
 "Fuzzy Finder
 " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-let g:fzf_layout = { 'up': '~40%' }
+let g:fzf_layout = { 'up': '~50%' }
+" let g:fzf_preview_window = ['right:hidden', 'ctrl-/']
 let g:fzf_preview_window = 'right:60%'
 
 "NerdTree Configs
@@ -238,6 +229,14 @@ nmap <Leader>f :BT<cr>
 nmap <Leader>r :Rg<cr>
 nmap <Leader>R :Rg <C-R>=expand('<cword>')<cr><cr>
 
+" Conque Of Completions
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+
+
 "Git maps
 nmap <Leader>gg :Git<cr>
 nmap <Leader>gc :Git commit<cr>
@@ -252,7 +251,9 @@ nmap <Leader>z :MaximizerToggle<cr>
 "--------------Macros--------------"
 "put the var under the cursor into a die and dump func
 " nmap <Leader>dd veyodd(pA;
-nmap <Leader>dd F$wyiwodd($pA);€ýa
+" nmap <Leader>dd F$wyiwodd($pA);€ýa
+nmap <Leader>dd F$yeodd(pA);
+nmap <Leader>p maoprint('===============================================================')yyp`ayiwjoprint(pA)
 
 
 "-------------Testing---------------"
@@ -344,7 +345,8 @@ autocmd InsertLeave * set iminsert=0
 "CHANGE SURROUNDING
 "
 " 
-" this command is used to change whitespaces from visual selection s/\%V\s/_/g  into underlines
+" this command is used to change whitespaces from visual selection
+" s/\%V\s/_/g  into underlines
 "
 "Create tags file
 " !ctags -R --exclude=node_modules --exclude=vendor
@@ -365,6 +367,7 @@ autocmd InsertLeave * set iminsert=0
 " let @q = '"/$this->get('"f'yi'l/"g_byiwh?"public function"f)i, p/"$this->get('"_yt ?"public function"f)i p/"$this->get"('d1k€ýa'
 "
 " mysql://{user}:{password}@{ipAddress}:{port}/{database}
+" mysql://sail:password@172.19.0.2:3306/laravel mePoppy
 
 
 " set term=xterm-256color
